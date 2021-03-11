@@ -1,10 +1,10 @@
 // import logo from './logo.svg';
 // import './App.css';
+import AppRouter from "./Router";
+
 
 function App() {
-  return (
-    <div>Hello Wordl!</div>
-  );
+  return <AppRouter/>;
 }
 
 export default App;
