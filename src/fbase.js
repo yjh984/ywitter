@@ -1,5 +1,7 @@
+// import * as firebase from "firebase/app";
 import firebase from "firebase/app";
 import "firebase/analytics";
+import 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -11,5 +13,7 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_MEASURE_ID
 };
 // Initialize Firebase
-export default firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// export default firebase.initializeApp(firebaseConfig);
+// firebase.analytics();
+firebase.initializeApp(firebaseConfig);
+export const authService=firebase.auth();
