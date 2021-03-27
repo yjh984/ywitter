@@ -1,4 +1,4 @@
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import React, { useState } from 'react';
 
 const Yweet=({yweetObj,isOwner})=>{
@@ -9,6 +9,7 @@ const Yweet=({yweetObj,isOwner})=>{
     const ok=window.confirm("Are you sure?");
     if(ok){
       await dbService.doc(`yweets/${yweetObj.id}`).delete();
+      await storageService.refFromURL(yweetObj.attachmentUrl).delete();
     }
   };
 
@@ -36,10 +37,12 @@ const Yweet=({yweetObj,isOwner})=>{
           <button onClick={toggleEditing}>Cancel</button>
         </>
         :
-        <><div>{yweetObj.text}</div>
-        {isOwner && <><button onClick={onDeleteClick}>Delete</button>
-          <button onClick={toggleEditing}>Edit</button></>
-        }
+        <><div>
+            {yweetObj.text}
+            {yweetObj.attachmentUrl&&<img src={yweetObj.attachmentUrl} width='20px' height='20px' alt='profile'/>}
+          </div>
+          {isOwner && <><button onClick={onDeleteClick}>Delete</button>
+          <button onClick={toggleEditing}>Edit</button></>}
         </>
       }    
     </div>
