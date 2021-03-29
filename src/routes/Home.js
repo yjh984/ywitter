@@ -6,7 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 const Home=({userObj})=> {
   const [yweet,setYweet]=useState("");
   const [yweets,setYweets]=useState([]);
-  const [attachment,setAttachment]=useState();
+  const [attachment,setAttachment]=useState("");
 
   /*  old version for get database... & forEach(...)
   const getYweets = async ()=>{

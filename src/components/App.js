@@ -17,7 +17,11 @@ function App() {
       // console.log(user));
       if(user){
         // setLoggedIn(true);
-        setUserObj(user);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args)=>user.updateProfile(args),
+        });
       }
       // else{
       //   setLoggedIn(false);
@@ -25,11 +29,21 @@ function App() {
       setInit(true);
       });
     },[]);
+  const refreshUser=()=>{
+    // console.log(userObj.displayName);
+    // setUserObj(userObj); // too big object to recognize it in React..
+    const user=authService.currentUser;
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args)=>user.updateProfile(args),
+    });
+  }
 
  return (
     <>
       {/* {init ? <AppRouter isLoggedIn={isLoggedIn} userObj={userObj}/> :'Initializing...'} */}
-      {init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj}/> :'Initializing...'}
+      {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj}/> :'Initializing...'}
       <footer>&copy; Ywitter {new Date().getFullYear()}</footer>
     </>
   );
