@@ -1,0 +1,17 @@
+.navUL{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.navRootLink {
+  margin-right: 10px;
+}
+
+.navProfileLink {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+}

@@ -4,25 +4,27 @@ import Auth from 'routes/Auth';
 import Home from 'routes/Home';
 import Profile from 'routes/Profile';
 import Navigation from 'components/Navigation';
+import 'components/Router.css';
 
 const AppRouter =({refreshUser, isLoggedIn, userObj})=>{
     return (
         <Router>
             {isLoggedIn && <Navigation userObj={userObj}/>}
             <Switch>
-                {isLoggedIn? <>
+                {isLoggedIn? (
+                    <div className='routerDiv'>
                     <Route exact path='/'>
                         <Home userObj={userObj}/>
                     </Route>
                     <Route exact path='/profile'>
                         <Profile refreshUser={refreshUser} userObj={userObj}/>
                     </Route>
-                    </>
-                    :
+                    </div>
+                    ):(
                     <Route exact path='/'>
                         <Auth/>
                     </Route>
-                }
+                )}
             </Switch>
         </Router>
     )
