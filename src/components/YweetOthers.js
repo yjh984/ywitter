@@ -1,20 +1,12 @@
-import { dbService, storageService } from 'fbase';
+import { dbService } from 'fbase';
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import 'components/Yweet.css'
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import 'components/YweetOthers.css'
 
-const Yweet=({yweetObj,isOwner})=>{
+const YweetOthers=({yweetObj,isOwner})=>{
   const [editing,setEditing]=useState(false);
   const [newYweet,setNewYweet]=useState(yweetObj.text);
-
-  const onDeleteClick=async()=>{
-    const ok=window.confirm("Are you sure?");
-    if(ok){
-      await dbService.doc(`yweets/${yweetObj.id}`).delete();
-      await storageService.refFromURL(yweetObj.attachmentUrl).delete();
-    }
-  };
 
   const toggleEditing=()=>setEditing((prev)=>!prev);
   const onSubmit=async(e)=>{
@@ -30,9 +22,7 @@ const Yweet=({yweetObj,isOwner})=>{
   };
 
   return (
-    <div className='yweet'>
-      {/* {console.log(isOwner)} */}
-      {/* {console.log(yweetObj.creatorId)} */}
+    <div className='yweet__others'>
       {editing? 
         <>
          <form onSubmit={onSubmit} className='container yweetEdit'>
@@ -51,22 +41,10 @@ const Yweet=({yweetObj,isOwner})=>{
             {yweetObj.text}
             {yweetObj.attachmentUrl&&<img src={yweetObj.attachmentUrl} alt='profile'/>}
           </div>
-          {/* {isOwner && <><button onClick={onDeleteClick}>Delete</button>
-          <button onClick={toggleEditing}>Edit</button></>} */}
-          {<div className='yweet__actions'>
-            <span onClick={onDeleteClick}>
-              <FontAwesomeIcon icon={faTrash}/>
-            </span>
-            <span onClick={toggleEditing}>
-              <FontAwesomeIcon icon={faPencilAlt}/>
-            </span>
-          </div>}
           </>
-          // )
-          // : ""}
       }    
     </div>
   )
 }
 
-export default Yweet;
+export default YweetOthers;

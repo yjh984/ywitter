@@ -5,14 +5,14 @@
     margin-top: 15px;
     margin-bottom: 15px;
   }
-  
-  .yweet {
+
+  .yweet__others {
     margin-bottom: 30px;
-    margin-left: 30px;
-    background-color: white;
+    background-color: rgb(211, 208, 208);
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     padding: 10px;
+    /* margin-right: 300px; */
     border-radius: 10px;
     position: relative;
     display: flex;

@@ -1,4 +1,5 @@
 import Yweet from 'components/Yweet';
+import YweetOthers from 'components/YweetOthers';
 import YweetFactory from 'components/YweetFactory';
 import { dbService } from 'fbase';
 import React, { useEffect, useState } from 'react';
@@ -53,9 +54,18 @@ const Home=({userObj})=> {
       <YweetFactory userObj={userObj}/>
       {/* {console.log(yweets)} */}
     <div className='homeDiv'>
-      {yweets.map((yweet)=>(
+      {/* {yweets.map((yweet)=>(
         <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId===userObj.uid}/>
-      ))}
+      ))} */}
+      {yweets.map(function(y){
+        console.log(y.creatorId===userObj.uid);
+        // console.log(userObj.uid);
+        if (y.creatorId===userObj.uid){
+          return <Yweet key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+        } else{
+          return <YweetOthers key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+        }
+      })}
     </div>
   </div>
   );
