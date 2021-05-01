@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import 'components/YweetOthers.css'
 
-const YweetOthers=({yweetObj,isOwner})=>{
+const YweetOthers=({yweetObj,userObj})=>{
   const [editing,setEditing]=useState(false);
   const [newYweet,setNewYweet]=useState(yweetObj.text);
 
@@ -20,6 +20,10 @@ const YweetOthers=({yweetObj,isOwner})=>{
     const {target:{value}}=e;
     setNewYweet(value);
   };
+
+  // useEffect(()=>{
+  //   notifyMsg(yweetObj.text);
+  // },[]);
 
   return (
     <div className='yweet__others'>
@@ -38,6 +42,8 @@ const YweetOthers=({yweetObj,isOwner})=>{
         // {isOwner? (
           <><div>
             {/* {console.log('isOwner')} */}
+            {/* {userObj.displayName}
+            {' : '} */}
             {yweetObj.text}
             {yweetObj.attachmentUrl&&<img src={yweetObj.attachmentUrl} alt='profile'/>}
           </div>

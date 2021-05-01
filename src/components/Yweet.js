@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import 'components/Yweet.css'
 
-const Yweet=({yweetObj,isOwner})=>{
+const Yweet=({yweetObj,userObj})=>{
   const [editing,setEditing]=useState(false);
   const [newYweet,setNewYweet]=useState(yweetObj.text);
 
@@ -48,6 +48,8 @@ const Yweet=({yweetObj,isOwner})=>{
         // {isOwner? (
           <><div>
             {/* {console.log('isOwner')} */}
+            {/* {userObj.displayName}
+            {' : '} */}
             {yweetObj.text}
             {yweetObj.attachmentUrl&&<img src={yweetObj.attachmentUrl} alt='profile'/>}
           </div>

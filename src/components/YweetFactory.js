@@ -25,7 +25,7 @@ const YweetFactory=({userObj})=>{
             // console.log(attachmentUrl);
         };
         const yweetObj={
-            text: yweet,
+            text: userObj.displayName + ' : '+yweet,
             createdAt: Date.now(),
             creatorId: userObj.uid,
             attachmentUrl,

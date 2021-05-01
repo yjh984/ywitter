@@ -1,9 +1,11 @@
 import Yweet from 'components/Yweet';
 import YweetOthers from 'components/YweetOthers';
 import YweetFactory from 'components/YweetFactory';
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
 import React, { useEffect, useState } from 'react';
 import 'routes/Home.css';
+import getNotificationPermission from 'components/Messaging';
+import notifyMsg from 'components/notifyMsg';
 
 const Home=({userObj})=> {
   const [yweets,setYweets]=useState([]);
@@ -33,15 +35,17 @@ const Home=({userObj})=> {
   */
 
   useEffect(()=>{
-      // getYweets();
-      dbService.collection('yweets').orderBy('createdAt','desc').onSnapshot(sn=>{
-        // console.log(sn);
-        const yweetsArray=sn.docs.map(doc=>({
-          id:doc.id,
-          ...doc.data()
-        }));
-        setYweets(yweetsArray);
-      });
+    // getYweets();
+    getNotificationPermission();
+    // notifyMsg('test');
+    dbService.collection('yweets').orderBy('createdAt','desc').onSnapshot(sn=>{
+      // console.log(sn);
+      const yweetsArray=sn.docs.map(doc=>({
+        id:doc.id,
+        ...doc.data()
+      }));
+      setYweets(yweetsArray);
+    });    
   },[]);
 //   useEffect(async()=>{ useEffect의 callback func은 sync...로 async불가
 //     const dbYweets=await dbService.collection('yweets').get();
@@ -57,15 +61,32 @@ const Home=({userObj})=> {
       {/* {yweets.map((yweet)=>(
         <Yweet key={yweet.id} yweetObj={yweet} isOwner={yweet.creatorId===userObj.uid}/>
       ))} */}
-      {yweets.map(function(y){
-        console.log(y.creatorId===userObj.uid);
+      {yweets.map(function(y,i){
+        // console.log(y.creatorId===userObj.uid);
         // console.log(userObj.uid);
+        // let i = 0;        
+        // console.log(i);
         if (y.creatorId===userObj.uid){
-          return <Yweet key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+          // return <Yweet key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+          return <Yweet key={y.id} yweetObj={y} userObj={userObj}/>
         } else{
-          return <YweetOthers key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+          if(i===0 && !document.hasFocus()) {
+            // notifyMsg(y.text);
+            notifyMsg(y.text);
+          }
+          // return <YweetOthers key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
+          return <YweetOthers key={y.id} yweetObj={y} userObj={userObj}/>
         }
       })}
+      {yweets.map( function(y){
+        if (Date.now()>y.createdAt+604800000 ){
+          // console.log('too old');
+          dbService.doc(`yweets/${y.id}`).delete();
+          storageService.refFromURL(y.attachmentUrl).delete();
+        }
+        // return console.log(y.createdAt);
+      })
+      }
     </div>
   </div>
   );
