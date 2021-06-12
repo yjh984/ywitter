@@ -70,21 +70,28 @@ const Home=({userObj})=> {
           // return <Yweet key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
           return <Yweet key={y.id} yweetObj={y} userObj={userObj}/>
         } else{
+          // console.log('array'+i);
           if(i===0 && !document.hasFocus()) {
             // notifyMsg(y.text);
+            // console.log('i===0 && !focus');
             notifyMsg(y.text);
           }
+          // console.log("testdddd....");
           // return <YweetOthers key={y.id} yweetObj={y} isOwner={y.creatorId===userObj.uid}/>
           return <YweetOthers key={y.id} yweetObj={y} userObj={userObj}/>
         }
       })}
       {yweets.map( function(y){
-        if (Date.now()>y.createdAt+604800000 ){
-          // console.log('too old');
+        if (Date.now()>y.createdAt){
+        // if (Date.now()>y.createdAt+604800000 ){
+          // console.log('too old : '+y.attachmentUrl);
+          if (y.attachmentUrl!=="") {
+            storageService.refFromURL(y.attachmentUrl).delete();
+          }  
           dbService.doc(`yweets/${y.id}`).delete();
-          storageService.refFromURL(y.attachmentUrl).delete();
         }
-        // return console.log(y.createdAt);
+        // console.log("y.att : "+y.attachmentUrl);
+        return null;
       })
       }
     </div>
