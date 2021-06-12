@@ -82,8 +82,8 @@ const Home=({userObj})=> {
         }
       })}
       {yweets.map( function(y){
-        if (Date.now()>y.createdAt){
-        // if (Date.now()>y.createdAt+604800000 ){
+        // if (Date.now()>y.createdAt){
+        if (Date.now()>y.createdAt+604800000 ){
           // console.log('too old : '+y.attachmentUrl);
           if (y.attachmentUrl!=="") {
             storageService.refFromURL(y.attachmentUrl).delete();
